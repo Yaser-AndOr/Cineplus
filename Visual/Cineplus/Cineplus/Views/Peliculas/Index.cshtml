@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Cineplus.Pelicula>
+
+@Styles.Render("~/Content/Cartelera.css")
+
+
+@{
+    ViewBag.Title = "Cartelera Cine+";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<h2>Index</h2>
+    <div class="grid-container">
+        @foreach (var item in Model)
+        {
+            <div class="item">
+                <div class="image">
+                    <img id="View" src="@Html.DisplayFor(modelItem => item.getImage)" width="180px" height="300px" />
+                </div>
+                <div class="info">
+                    <h2>
+                        @Html.DisplayFor(modelItem => item.Titulo)
+                    </h2>
+                    <h3>
+                        @Html.DisplayFor(modelItem => item.Sinopsis)
+                    </h3>
+                    <h3>
+                        Genero: @Html.DisplayFor(modelItem => item.Director)
+                    </h3>
+                    <h3>
+                        Director: @Html.DisplayFor(modelItem => item.Genero)
+                    </h3>
+                    <div class="puntaje">
+                        <div class="estrellas">
+                            <input type="radio" name="rate" id="rate5" />
+                            <label for="rate5" class="fa fa-star"></label>
+                            <input type="radio" name="rate" id="rate4"/>
+                            <label for="rate4" class="fa fa-star"></label>
+                            <input type="radio" name="rate" id="rate3"/>
+                            <label for="rate3" class="fa fa-star"></label>
+                            <input type="radio" name="rate" id="rate2"/>
+                            <label for="rate2" class="fa fa-star"></label>
+                            <input type="radio" name="rate" id="rate1"/>
+                            <label for="rate1" class="fa fa-star"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script language="JavaScript">
+                const opciones = document.getElementsByName("rate");
+
+                for (let i = 0; i < opciones.length; i++) {
+                    opciones[i].addEventListener("click", handleSelection);
+                }
+                function handleSelection() {
+                    for (let i = 0; i < opciones.length; i++) {
+                        if (opciones[i].checked) {
+                            switch (i) {
+                                case 1:
+                                    console.log(1);
+                                    @Html.DisplayFor(modelItem => item.Ranker1);
+                                    break;
+                                case 2:
+                                    @Html.DisplayFor(modelItem => item.Ranker2);
+                                    break;
+                                case 3:
+                                    @Html.DisplayFor(modelItem => item.Ranker3);
+                                    break;
+                                case 4:
+                                    @Html.DisplayFor(modelItem => item.Ranker4);
+                                    break;
+                                case 5:
+                                    @Html.DisplayFor(modelItem => item.Ranker5);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            </script>
+        }
+    </div>

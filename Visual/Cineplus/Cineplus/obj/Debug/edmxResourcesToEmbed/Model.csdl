@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Pelicula">
+    <Key>
+      <PropertyRef Name="IDPelicula" />
+    </Key>
+    <Property Name="IDPelicula" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Poster" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Sinopsis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Director" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Genero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Rankings" Relationship="Self.FK__Ranking__IDPelic__3A81B327" FromRole="Pelicula" ToRole="Ranking" />
+  </EntityType>
+  <EntityType Name="Ranking">
+    <Key>
+      <PropertyRef Name="IDRanking" />
+    </Key>
+    <Property Name="IDRanking" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDPelicula" Type="Int32" Nullable="false" />
+    <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Puntaje" Type="Int32" />
+    <Property Name="NoVotos" Type="Int32" />
+    <NavigationProperty Name="Pelicula" Relationship="Self.FK__Ranking__IDPelic__3A81B327" FromRole="Ranking" ToRole="Pelicula" />
+  </EntityType>
+  <Association Name="FK__Ranking__IDPelic__3A81B327">
+    <End Role="Pelicula" Type="Self.Pelicula" Multiplicity="1" />
+    <End Role="Ranking" Type="Self.Ranking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pelicula">
+        <PropertyRef Name="IDPelicula" />
+      </Principal>
+      <Dependent Role="Ranking">
+        <PropertyRef Name="IDPelicula" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CineEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Peliculas" EntityType="Self.Pelicula" />
+    <EntitySet Name="Rankings" EntityType="Self.Ranking" />
+    <AssociationSet Name="FK__Ranking__IDPelic__3A81B327" Association="Self.FK__Ranking__IDPelic__3A81B327">
+      <End Role="Pelicula" EntitySet="Peliculas" />
+      <End Role="Ranking" EntitySet="Rankings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
